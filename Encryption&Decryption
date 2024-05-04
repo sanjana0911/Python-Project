@@ -1,0 +1,37 @@
+# Define the alphabet as a list of lowercase letters
+alphabet = ['a','b','c','d','e','f','g','h','i','j',
+            'k','l','m','n','o','p','q','r','s','t','u',
+            'v','w','x','y','z']
+
+# Define a function to encrypt or decrypt text based on the shift and direction
+def encrypt(text, shift, direction):
+    result = ""  # Initialize an empty string to store the result
+    for letter in text:  # Iterate through each character in the input text
+        if letter in alphabet:  # Check if the character is a letter in the alphabet
+            position = alphabet.index(letter)  # Find the index of the letter in the alphabet
+            if direction == 'encode':  # If the direction is to encode
+                new_position = (position + shift) % 26  # Calculate the new position after shifting
+            elif direction == 'decode':  # If the direction is to decode
+                new_position = (position - shift) % 26  # Calculate the new position after shifting
+            new_letter = alphabet[new_position]  # Get the letter at the new position
+            result += new_letter  # Add the new letter to the result string
+        else:  # If the character is not a letter in the alphabet
+            result += letter  # Add the character as it is to the result string
+    return result  # Return the encrypted or decrypted text
+
+# Main program loop
+while True:
+    direction = input("Type 'encode' to encrypt and 'decode' to decrypt (or 'quit' to exit):\n").lower()
+    if direction == 'quit':  # If the user wants to quit, break out of the loop
+        break
+    text = input("Type your message: \n").lower()  # Prompt the user to enter the message to encrypt or decrypt
+    shift = int(input("Type the shift number: \n"))  # Prompt the user to enter the shift number
+
+    if direction in ['encode', 'decode']:  # Check if the direction is valid
+        result = encrypt(text, shift, direction)  # Call the encrypt function with the input parameters
+        if direction == 'encode':  # If the direction is to encode
+            print(f"The encoded text is: {result}")  # Print the encoded text
+        elif direction == 'decode':  # If the direction is to decode
+            print(f"The decoded text is: {result}")  # Print the decoded text
+    else:  # If the direction is not valid
+        print("Invalid direction. Please enter 'encode', 'decode', or 'quit'.")  # Print an error message
